@@ -1,0 +1,18 @@
+fn longest_common_prefix(mut strs: Vec<String>) -> String {
+        if strs.is_empty() {
+            return "".to_string();
+        } else if strs.len() == 1 {
+            return strs[0].clone();
+        }
+        strs.sort_by_key(|s| s.len());
+        let mut prefix = strs.pop().unwrap();
+        for string in &strs {
+            while !string.starts_with(&prefix) {
+                prefix.pop();
+                if prefix.is_empty() {
+                    return "".to_string();
+                }
+            }
+        }
+        prefix
+ }
