@@ -1,0 +1,22 @@
+use std::collections::BinaryHeap;
+
+fn kth_smallest(arr: &[i32], k: usize) -> Option<i32> {
+    if k == 0 || k > arr.len() {
+        return None; 
+    }
+
+    let mut max_heap = BinaryHeap::with_capacity(k);
+
+    for &num in arr {
+        if max_heap.len() < k {
+            max_heap.push(num);
+        } else if let Some(&max_element) = max_heap.peek() {
+            if num < max_element {
+                max_heap.pop();
+                max_heap.push(num);
+            }
+        }
+    }
+
+    max_heap.pop()
+}
