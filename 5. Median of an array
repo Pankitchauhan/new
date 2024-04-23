@@ -1,0 +1,64 @@
+fn binary_search(sorted_array: &[i32]) -> Option<f64> {
+    let len = sorted_array.len();
+    if len == 0 {
+        return None; 
+    }
+
+    let mid = len / 2;
+    if len % 2 == 0 {
+        
+        let left = bi_left(sorted_array, sorted_array[mid - 1]);
+        let right = bi_right(sorted_array, sorted_array[mid]);
+        if let (Some(left_index), Some(right_index)) = (left, right) {
+            Some((left_index + right_index) as f64 / 2.0)
+        } else {
+            None
+        }
+    } else {
+        if let Some(mid_index) = bi_left(sorted_array, sorted_array[mid]) {
+            Some(mid_index as f64)
+        } else {
+            None
+        }
+    }
+}
+
+fn bi_left(arr: &[i32], target: i32) -> Option<usize> {
+    let mut low = 0;
+    let mut high = arr.len();
+
+    while low < high {
+        let mid = low + (high - low) / 2;
+        if arr[mid] < target {
+            low = mid + 1;
+        } else {
+            high = mid;
+        }
+    }
+
+    if low < arr.len() && arr[low] == target {
+        Some(low)
+    } else {
+        None
+    }
+}
+
+fn bi_right(arr: &[i32], target: i32) -> Option<usize> {
+    let mut low = 0;
+    let mut high = arr.len();
+
+    while low < high {
+        let mid = low + (high - low) / 2;
+        if arr[mid] <= target {
+            low = mid + 1;
+        } else {
+            high = mid;
+        }
+    }
+
+    if low > 0 && arr[low - 1] == target {
+        Some(low - 1)
+    } else {
+        None
+    }
+}
