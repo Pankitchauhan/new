@@ -10,3 +10,4 @@ fn is_prime(n: u64) -> bool {
     }
     
     true
+}
